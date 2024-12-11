@@ -1,4 +1,11 @@
+package com.example.service;
 
+import com.example.entity.*;
+import com.example.repository.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
+
+import java.util.*;
 
 @Service
 public class ItemService {
@@ -28,5 +35,10 @@ public class ItemService {
             return true;
         }
         return false;
+    }
+
+    public boolean processFormAndFin(String form, String fin) {
+        // Example logic: return true if both form and fin are not null or empty
+        return form != null && !form.isEmpty() && fin != null && !fin.isEmpty();
     }
 }

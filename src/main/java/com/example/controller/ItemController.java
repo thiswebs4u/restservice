@@ -1,4 +1,8 @@
+package com.example.controller;
+
 // Import necessary packages
+import com.example.entity.*;
+import com.example.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,95 +12,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import javax.persistence.*;
 import java.util.List;
 import java.util.Optional;
 
-@SpringBootApplication
-public class RestServiceApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(RestServiceApplication.class, args);
-    }
-}
-
-// --- Entity ---
-@Entity
-@Table(name = "items")
-public class Item {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String name;
-    private String description;
-
-    // Getters and setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-}
-
-// --- Repository ---
-interface ItemRepository extends JpaRepository<Item, Long> {
-}
-
-// --- Service ---
-@Service
-public class ItemService {
-
-    private final ItemRepository itemRepository;
-
-    @Autowired
-    public ItemService(ItemRepository itemRepository) {
-        this.itemRepository = itemRepository;
-    }
-
-    public List<Item> getAllItems() {
-        return itemRepository.findAll();
-    }
-
-    public Optional<Item> getItemById(Long id) {
-        return itemRepository.findById(id);
-    }
-
-    public Item createItem(Item item) {
-        return itemRepository.save(item);
-    }
-
-    public boolean deleteItem(Long id) {
-        if (itemRepository.existsById(id)) {
-            itemRepository.deleteById(id);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean processFormAndFin(String form, String fin) {
-        // Example logic: return true if both form and fin are not null or empty
-        return form != null && !form.isEmpty() && fin != null && !fin.isEmpty();
-    }
-}
 
 // --- Controller ---
 @RestController
